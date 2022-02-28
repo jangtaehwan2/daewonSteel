@@ -1,5 +1,6 @@
 package com.daewon.daewon.domain.steeldata;
 
+import com.daewon.daewon.domain.station.Station;
 import lombok.*;
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -18,8 +19,9 @@ public class SteelData {
     private long id;
 
     @NonNull
-    @Column(nullable = false)
-    private String station;
+    @ManyToOne
+    @JoinColumn(name = "station_id", foreignKey = @ForeignKey(name = "FK_Station_SteelData"))
+    private Station station;
 
     @NonNull
     @Column(nullable = false)
@@ -32,4 +34,15 @@ public class SteelData {
 
     @Column(columnDefinition = "tinyint(1) default false")
     private boolean deleted;
+
+    @Override
+    public String toString() {
+        return "SteelData{" +
+                "id=" + id +
+                ", station=" + station +
+                ", weight=" + weight +
+                ", date=" + date +
+                ", deleted=" + deleted +
+                '}';
+    }
 }

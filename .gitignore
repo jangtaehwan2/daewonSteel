@@ -7,7 +7,7 @@ build/
 
 
 ### db information ###
-!**/application.properties
+application.properties
 
 ### STS ###
 .apt_generated

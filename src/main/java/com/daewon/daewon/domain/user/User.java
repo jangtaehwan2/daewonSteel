@@ -24,4 +24,5 @@ public class User {
 
     @Column(columnDefinition = "tinyint(1) default false")
     private boolean isAdmin;
+
 }
