@@ -2,8 +2,10 @@ package com.daewon.daewon.entity;
 
 import com.daewon.daewon.domain.station.Station;
 import com.daewon.daewon.domain.steeldata.SteelData;
+import com.daewon.daewon.domain.user.User;
 import com.daewon.daewon.repository.StationRepository;
 import com.daewon.daewon.repository.SteelDataRepository;
+import com.daewon.daewon.repository.UserRepository;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +24,8 @@ public class RepositoryTest {
     StationRepository stationRepository;
     @Autowired
     SteelDataRepository steelDataRepository;
+    @Autowired
+    UserRepository userRepository;
 
     @Test
     @DisplayName("findByName, findById Test")
@@ -65,5 +69,23 @@ public class RepositoryTest {
         //when
         //then
         assertThrows(InvalidDataAccessApiUsageException.class, () -> steelDataRepository.save(steelData));
+    }
+
+    @Test
+    @DisplayName("속성값 변경 테스트")
+    public void updateUserTest() {
+        //given
+        User user = new User("hello", "world");
+        userRepository.save(user);
+
+        //when
+        user.updatePassword("newPassword");
+        userRepository.save(user);
+        User ReFoundUser = userRepository.findById(1L).get();
+
+        //then
+        System.out.println(ReFoundUser.toString());
+        assertThat(ReFoundUser.getUserPassword()).isEqualTo("newPassword");
+
     }
 }

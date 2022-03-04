@@ -9,13 +9,4 @@ public class UserRequestDto {
     private long id;
     private String userName;
     private String userPassword;
-
-    @Override
-    public String toString() {
-        return "UserRequestDto{" +
-                "id=" + id +
-                ", userName='" + userName + '\'' +
-                ", userPassword='" + userPassword + '\'' +
-                '}';
-    }
 }

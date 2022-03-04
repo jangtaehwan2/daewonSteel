@@ -4,6 +4,7 @@ import lombok.*;
 
 import javax.persistence.*;
 
+@ToString
 @Getter
 @RequiredArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -15,7 +16,7 @@ public class User {
     private long id;
 
     @NonNull
-    @Column(nullable = false)
+    @Column(nullable = false, unique = true)
     private String userName;
 
     @NonNull
@@ -25,4 +26,7 @@ public class User {
     @Column(columnDefinition = "tinyint(1) default false")
     private boolean isAdmin;
 
+    public void updatePassword(String newPassword) {
+        this.userPassword = newPassword;
+    }
 }
