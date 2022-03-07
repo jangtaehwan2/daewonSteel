@@ -8,6 +8,7 @@ import javax.persistence.*;
 import java.time.LocalDate;
 
 
+@ToString
 @Getter
 @RequiredArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -19,9 +20,7 @@ public class SteelData {
     private long id;
 
     @NonNull
-    @ManyToOne
-    @JoinColumn(name = "station_id", foreignKey = @ForeignKey(name = "FK_Station_SteelData"))
-    private Station station;
+    private String stationName;
 
     @NonNull
     @Column(nullable = false)
@@ -34,15 +33,4 @@ public class SteelData {
 
     @Column(columnDefinition = "tinyint(1) default false")
     private boolean deleted;
-
-    @Override
-    public String toString() {
-        return "SteelData{" +
-                "id=" + id +
-                ", station=" + station +
-                ", weight=" + weight +
-                ", date=" + date +
-                ", deleted=" + deleted +
-                '}';
-    }
 }

@@ -4,6 +4,7 @@ import lombok.*;
 
 import javax.persistence.*;
 
+@ToString
 @Getter
 @RequiredArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -17,11 +18,7 @@ public class Station {
     @Column(nullable = false, unique = true)
     private String name;
 
-    @Override
-    public String toString() {
-        return "Station{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                '}';
+    public void updateName(String newName) {
+        this.name = newName;
     }
 }

@@ -1,7 +1,5 @@
 package com.daewon.daewon.controller.admin;
 
-import com.daewon.daewon.domain.station.dto.StationRequestDto;
-import com.daewon.daewon.domain.station.dto.StationResponseDto;
 import com.daewon.daewon.domain.user.dto.*;
 import com.daewon.daewon.service.AdminPanelService;
 import lombok.RequiredArgsConstructor;
@@ -12,11 +10,6 @@ import org.springframework.web.bind.annotation.*;
 public class AdminPanelController {
 
     private final AdminPanelService adminPanelService;
-
-    @PostMapping("/api/admin/station")
-    public StationResponseDto createStation(@RequestBody StationRequestDto stationRequestDto) {
-        return adminPanelService.createStation(stationRequestDto.getName());
-    }
 
     @GetMapping("/api/admin/user")
     public ReadUserResponseDto readUser() {
