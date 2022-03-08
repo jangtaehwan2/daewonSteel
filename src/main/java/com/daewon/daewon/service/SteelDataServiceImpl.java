@@ -1,12 +1,16 @@
 package com.daewon.daewon.service;
 
 import com.daewon.daewon.domain.station.dto.ReadStationListResponseDto;
+import com.daewon.daewon.domain.steeldata.SteelData;
 import com.daewon.daewon.domain.steeldata.dto.*;
 import com.daewon.daewon.repository.SteelDataRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.util.List;
+
+import static java.time.temporal.TemporalAdjusters.*;
 
 @RequiredArgsConstructor
 @Service
@@ -14,37 +18,50 @@ public class SteelDataServiceImpl implements SteelDataService {
     private final SteelDataRepository steelDataRepository;
 
     @Override
-    public ReadStationListResponseDto readStationList() {
-        return null;
+    public CreateSteelDataResponseDto createSteelData(String stationName, long weight, LocalDate date) {
+        SteelData steelData = new SteelData(stationName, weight, date);
+        steelDataRepository.save(steelData);
+        return new CreateSteelDataResponseDto(steelData.getId(), steelData.getStationName(), steelData.getWeight(), steelData.getDate());
     }
 
     @Override
-    public CreateSteelDataResponseDto createSteelData(long stationId, long weight, LocalDate date) {
-        return null;
+    public ReadSteelDataResponseDto readSteelDataForYear(int year) {
+        LocalDate localDate = LocalDate.of(year, 1, 1);
+        LocalDate startDate = localDate.with(firstDayOfYear());
+        LocalDate endDate = localDate.with(lastDayOfYear());
+        List<SteelData> steelDataList = steelDataRepository.findByDateBetweenAndDeleted(startDate, endDate, false);
+        return new ReadSteelDataResponseDto(steelDataList);
     }
 
     @Override
-    public ReadSteelDataForYearResponseDto readSteelDataForYear(int year) {
-        return null;
+    public ReadSteelDataResponseDto readSteelDataForMonth(int year, int month) {
+        LocalDate localDate = LocalDate.of(year, month, 1);
+        LocalDate startDate = localDate.with(firstDayOfMonth());
+        LocalDate endDate = localDate.with(lastDayOfMonth());
+        List<SteelData> steelDataList = steelDataRepository.findByDateBetweenAndDeleted(startDate, endDate, false);
+        return new ReadSteelDataResponseDto(steelDataList);
     }
 
     @Override
-    public ReadSteelDataForMonthResponseDto readSteelDataForMonth(int year, int month) {
-        return null;
+    public ReadSteelDataResponseDto readSteelDataForDay(int year, int month, int day) {
+        LocalDate localDate = LocalDate.of(year, month, day);
+        List<SteelData> steelDataList = steelDataRepository.findByDateBetweenAndDeleted(localDate, localDate, false);
+        return new ReadSteelDataResponseDto(steelDataList);
     }
 
     @Override
-    public ReadSteelDataForDayResponseDto readSteelDataForDay(int year, int month, int day) {
-        return null;
-    }
+    public UpdateSteelDataResponseDto updateSteelData(long id, String newStationName, long newWeight, LocalDate newDate) {
+        SteelData steelData = steelDataRepository.findById(id).get();
+        steelData.updateSteelData(newStationName, newWeight, newDate);
+        steelDataRepository.save(steelData);
+        return new UpdateSteelDataResponseDto(steelData.getId(), steelData.getStationName(), steelData.getWeight(), steelData.getDate());
 
-    @Override
-    public UpdateSteelDataResponseDto updateSteelData(long id, long newStationId, long newWeight, LocalDate newDate) {
-        return null;
     }
 
     @Override
     public DeleteSteelDataResponseDto deleteSteelData(long id) {
-        return null;
+        SteelData steelData = steelDataRepository.findById(id).get();
+        steelDataRepository.delete(steelData);
+        return new DeleteSteelDataResponseDto("1");
     }
 }

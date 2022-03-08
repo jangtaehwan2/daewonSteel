@@ -6,11 +6,10 @@ import com.daewon.daewon.domain.steeldata.dto.*;
 import java.time.LocalDate;
 
 public interface SteelDataService {
-    ReadStationListResponseDto readStationList();
-    CreateSteelDataResponseDto createSteelData(long stationId, long weight, LocalDate date);
-    ReadSteelDataForYearResponseDto readSteelDataForYear(int year);
-    ReadSteelDataForMonthResponseDto readSteelDataForMonth(int year, int month);
-    ReadSteelDataForDayResponseDto readSteelDataForDay(int year, int month, int day);
-    UpdateSteelDataResponseDto updateSteelData(long id, long newStationId, long newWeight, LocalDate newDate);
+    CreateSteelDataResponseDto createSteelData(String stationName, long weight, LocalDate date);
+    ReadSteelDataResponseDto readSteelDataForYear(int year);
+    ReadSteelDataResponseDto readSteelDataForMonth(int year, int month);
+    ReadSteelDataResponseDto readSteelDataForDay(int year, int month, int day);
+    UpdateSteelDataResponseDto updateSteelData(long id, String newStationName, long newWeight, LocalDate newDate);
     DeleteSteelDataResponseDto deleteSteelData(long id);
 }

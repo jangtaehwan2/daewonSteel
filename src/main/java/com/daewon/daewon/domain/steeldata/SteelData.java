@@ -20,6 +20,7 @@ public class SteelData {
     private long id;
 
     @NonNull
+    @Column(nullable = false)
     private String stationName;
 
     @NonNull
@@ -33,4 +34,13 @@ public class SteelData {
 
     @Column(columnDefinition = "tinyint(1) default false")
     private boolean deleted;
+
+    public void updateSteelData(String newStationName, long newWeight, LocalDate newDate) {
+        this.stationName = newStationName;
+        this.weight = newWeight;
+        this.date = newDate;
+    }
+    public void deleteSteelData(long id) {
+        this.deleted = true;
+    }
 }

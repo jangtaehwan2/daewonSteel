@@ -52,23 +52,13 @@ public class RepositoryTest {
         // 객체를 리턴받아서 재설정하지 않더라도, save 하며 아이디가 저장되면(DB) 객체가 업데이트 된다.
 
         //when
-        SteelData steelData = new SteelData(station, 100, LocalDate.of(2022,02,28));
+        SteelData steelData = new SteelData(station.getName(), 100, LocalDate.of(2022,02,28));
         steelDataRepository.save(steelData);
 
         //then
         SteelData newSteelData = steelDataRepository.findById(1L).get();
         System.out.println(newSteelData.toString());
         assertThat(newSteelData).isNotNull();
-    }
-
-    @Test
-    public void withoutStationTest() {
-        //given
-        SteelData steelData = new SteelData(new Station("hello"), 100, LocalDate.of(2022,02,28));
-
-        //when
-        //then
-        assertThrows(InvalidDataAccessApiUsageException.class, () -> steelDataRepository.save(steelData));
     }
 
     @Test

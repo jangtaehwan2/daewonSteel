@@ -11,7 +11,7 @@ public class SteelDataRequestDto {
     private long id;
     private long weight;
     private LocalDate date;
-    private long stationId;
+    private String stationName;
     private int year;
     private int month;
     private int day;
