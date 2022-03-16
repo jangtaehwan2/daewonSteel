@@ -8,6 +8,9 @@ build/
 
 ### db information ###
 **/application-hidden.properties
+### JWT information ###
+**/JwtConfig
+**/JwtTest
 
 ### STS ###
 .apt_generated

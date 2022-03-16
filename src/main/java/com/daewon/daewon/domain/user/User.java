@@ -29,4 +29,5 @@ public class User {
     public void updatePassword(String newPassword) {
         this.userPassword = newPassword;
     }
+    public boolean isAdmin() { return this.isAdmin; }
 }

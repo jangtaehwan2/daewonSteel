@@ -1,4 +1,4 @@
-package com.daewon.daewon.controller.admin;
+package com.daewon.daewon.controller;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
