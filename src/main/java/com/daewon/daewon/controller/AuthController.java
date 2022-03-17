@@ -20,8 +20,11 @@ public class AuthController {
 
     @PostMapping("/login")
     public ResponseEntity<LoginResponseDto> login(@RequestBody LoginRequestDto requestDto) {
-        LoginResponseDto loginResponseDto = authService.login(requestDto.getUserId(), requestDto.getUserPassword());
-        return new ResponseEntity(loginResponseDto, HttpStatus.OK);
+        try {
+            return ResponseEntity.ok().body(authService.login(requestDto.getUserId(), requestDto.getUserPassword()));
+        } catch (Exception e)
+        {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+        }
     }
-
 }

@@ -3,6 +3,7 @@ package com.daewon.daewon.service;
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.JWTVerifier;
 import com.auth0.jwt.algorithms.Algorithm;
+import com.auth0.jwt.exceptions.JWTVerificationException;
 import com.auth0.jwt.interfaces.DecodedJWT;
 import com.daewon.daewon.JwtConfig;
 import com.daewon.daewon.domain.user.User;
@@ -22,6 +23,12 @@ public class AuthorizationManagerImpl implements AuthorizationManager {
     private JWTVerifier jwtVerifier = JWT.require(algorithm)
             .withIssuer(issuer)
             .build();
+
+    /**
+     * token is valid ? -> true
+     * @param token
+     * @return
+     */
     @Override
     public boolean isUser(String token) {
         DecodedJWT decodedJWT = jwtVerifier.verify(token);
@@ -33,15 +40,25 @@ public class AuthorizationManagerImpl implements AuthorizationManager {
         }
     }
 
+    /**
+     * token is valid? -> true or false
+     * token is not valid -> JWTVerificationException
+     * @param token
+     * @return
+     */
     @Override
     public boolean isAdmin(String token) {
-        DecodedJWT decodedJWT = jwtVerifier.verify(token);
-        String userName = decodedJWT.getClaim("userName").asString();
-        User user = userRepository.findByUserName(userName).get();
-        if(user.isAdmin() == true) {
-            return true;
-        } else {
-            return false;
+        try {
+            DecodedJWT decodedJWT = jwtVerifier.verify(token);
+            String userName = decodedJWT.getClaim("userName").asString();
+            User user = userRepository.findByUserName(userName).get();
+            if(user.isAdmin() == true) {
+                return true;
+            } else {
+                return false;
+            }
+        } catch(JWTVerificationException exception) {
+            throw exception;
         }
     }
 }

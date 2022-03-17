@@ -25,6 +25,12 @@ public class SteelDataServiceImpl implements SteelDataService {
     }
 
     @Override
+    public ReadSteelDataResponseDto readSteelDataAll() {
+        List<SteelData> steelDataList = steelDataRepository.findAll();
+        return new ReadSteelDataResponseDto(steelDataList);
+    }
+
+    @Override
     public ReadSteelDataResponseDto readSteelDataForYear(int year) {
         LocalDate localDate = LocalDate.of(year, 1, 1);
         LocalDate startDate = localDate.with(firstDayOfYear());

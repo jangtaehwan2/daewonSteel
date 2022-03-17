@@ -1,11 +1,15 @@
 package com.daewon.daewon.controller;
 
+import com.auth0.jwt.exceptions.TokenExpiredException;
 import com.daewon.daewon.domain.station.dto.*;
+import com.daewon.daewon.service.AuthorizationManager;
 import com.daewon.daewon.service.StationService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import javax.validation.Valid;
 
 @RequestMapping("/api")
 @RequiredArgsConstructor
@@ -13,26 +17,57 @@ import org.springframework.web.bind.annotation.*;
 public class StationController {
 
     private final StationService stationService;
+    private final AuthorizationManager authorizationManager;
 
     @PostMapping("/station")
-    public CreateStationResponseDto createStation(@RequestBody StationRequestDto stationRequestDto) {
-        return stationService.createStation(stationRequestDto.getName());
+    public ResponseEntity<CreateStationResponseDto> createStation(@Valid @RequestBody StationRequestDto stationRequestDto, @RequestHeader(value = "Authorization") String token) {
+        try {
+            if(authorizationManager.isAdmin(token)) {
+                return ResponseEntity.ok().body(stationService.createStation(stationRequestDto.getName()));
+            } else {
+                return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+            }
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+        }
     }
 
     @GetMapping("/station")
-    public ResponseEntity<ReadStationListResponseDto> readStationList() {
-        ReadStationListResponseDto readStationListResponseDto = stationService.readStation();
-//        return ResponseEntity.status(HttpStatus.OK).body(readStationListResponseDto);
-        return new ResponseEntity(readStationListResponseDto, HttpStatus.OK);
+    public ResponseEntity<ReadStationListResponseDto> readStationList(@RequestHeader(value = "Authorization") String token) {
+        try {
+            if(authorizationManager.isUser(token)) {
+                return ResponseEntity.ok().body(stationService.readStation());
+            } else {
+                return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+            }
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+        }
     }
 
     @PutMapping("/station")
-    public UpdateStationResponseDto updateStation(@RequestBody StationRequestDto stationRequestDto) {
-        return stationService.updateStation(stationRequestDto.getId(), stationRequestDto.getName());
+    public ResponseEntity<UpdateStationResponseDto> updateStation(@RequestBody StationRequestDto stationRequestDto, @RequestHeader(value = "Authorization") String token) {
+        try {
+            if(authorizationManager.isAdmin(token)) {
+                return ResponseEntity.ok().body(stationService.updateStation(stationRequestDto.getId(), stationRequestDto.getName()));
+            } else {
+                return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+            }
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+        }
     }
 
     @DeleteMapping("/station")
-    public DeleteStationResponseDto deleteStation(@RequestBody StationRequestDto stationRequestDto) {
-        return stationService.deleteStation(stationRequestDto.getId());
+    public ResponseEntity<DeleteStationResponseDto> deleteStation(@RequestBody StationRequestDto stationRequestDto,  @RequestHeader(value = "Authorization") String token) {
+        try {
+            if(authorizationManager.isAdmin(token)) {
+                return ResponseEntity.ok().body(stationService.deleteStation(stationRequestDto.getId()));
+            } else {
+                return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+            }
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+        }
     }
 }

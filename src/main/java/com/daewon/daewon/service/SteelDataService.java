@@ -7,6 +7,7 @@ import java.time.LocalDate;
 
 public interface SteelDataService {
     CreateSteelDataResponseDto createSteelData(String stationName, long weight, LocalDate date);
+    ReadSteelDataResponseDto readSteelDataAll();
     ReadSteelDataResponseDto readSteelDataForYear(int year);
     ReadSteelDataResponseDto readSteelDataForMonth(int year, int month);
     ReadSteelDataResponseDto readSteelDataForDay(int year, int month, int day);
