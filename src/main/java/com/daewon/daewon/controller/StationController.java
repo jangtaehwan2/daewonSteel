@@ -25,7 +25,7 @@ public class StationController {
             if(authorizationManager.isAdmin(token)) {
                 return ResponseEntity.ok().body(stationService.createStation(stationRequestDto.getName()));
             } else {
-                return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+                return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
             }
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
@@ -51,7 +51,7 @@ public class StationController {
             if(authorizationManager.isAdmin(token)) {
                 return ResponseEntity.ok().body(stationService.updateStation(stationRequestDto.getId(), stationRequestDto.getName()));
             } else {
-                return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+                return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
             }
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
@@ -64,7 +64,7 @@ public class StationController {
             if(authorizationManager.isAdmin(token)) {
                 return ResponseEntity.ok().body(stationService.deleteStation(stationRequestDto.getId()));
             } else {
-                return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+                return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
             }
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();

@@ -88,7 +88,7 @@ public class SteelDataController {
             if(authorizationManager.isAdmin(token)) {
                 return ResponseEntity.ok().body(steelDataService.updateSteelData(steelDataRequestDto.getId(), steelDataRequestDto.getStationName(), steelDataRequestDto.getWeight(), steelDataRequestDto.getDate()));
             } else {
-                return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+                return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
             }
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
@@ -101,7 +101,7 @@ public class SteelDataController {
             if(authorizationManager.isAdmin(token)) {
                 return ResponseEntity.ok().body(steelDataService.deleteSteelData(steelDataRequestDto.getId()));
             } else {
-                return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+                return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
             }
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
