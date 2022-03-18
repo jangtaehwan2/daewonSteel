@@ -7,5 +7,5 @@ import java.time.LocalDate;
 import java.util.List;
 
 public interface SteelDataRepository extends JpaRepository<SteelData, Long> {
-    List<SteelData> findByDateBetweenAndDeleted(LocalDate startDate, LocalDate endDate, boolean deleted);
+    List<SteelData> findByDateBetweenAndDeletedOrderByDateAsc(LocalDate startDate, LocalDate endDate, boolean deleted);
 }

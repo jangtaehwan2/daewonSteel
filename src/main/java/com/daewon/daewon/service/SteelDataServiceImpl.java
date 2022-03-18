@@ -35,7 +35,7 @@ public class SteelDataServiceImpl implements SteelDataService {
         LocalDate localDate = LocalDate.of(year, 1, 1);
         LocalDate startDate = localDate.with(firstDayOfYear());
         LocalDate endDate = localDate.with(lastDayOfYear());
-        List<SteelData> steelDataList = steelDataRepository.findByDateBetweenAndDeleted(startDate, endDate, false);
+        List<SteelData> steelDataList = steelDataRepository.findByDateBetweenAndDeletedOrderByDateAsc(startDate, endDate, false);
         return new ReadSteelDataResponseDto(steelDataList);
     }
 
@@ -44,14 +44,14 @@ public class SteelDataServiceImpl implements SteelDataService {
         LocalDate localDate = LocalDate.of(year, month, 1);
         LocalDate startDate = localDate.with(firstDayOfMonth());
         LocalDate endDate = localDate.with(lastDayOfMonth());
-        List<SteelData> steelDataList = steelDataRepository.findByDateBetweenAndDeleted(startDate, endDate, false);
+        List<SteelData> steelDataList = steelDataRepository.findByDateBetweenAndDeletedOrderByDateAsc(startDate, endDate, false);
         return new ReadSteelDataResponseDto(steelDataList);
     }
 
     @Override
     public ReadSteelDataResponseDto readSteelDataForDay(int year, int month, int day) {
         LocalDate localDate = LocalDate.of(year, month, day);
-        List<SteelData> steelDataList = steelDataRepository.findByDateBetweenAndDeleted(localDate, localDate, false);
+        List<SteelData> steelDataList = steelDataRepository.findByDateBetweenAndDeletedOrderByDateAsc(localDate, localDate, false);
         return new ReadSteelDataResponseDto(steelDataList);
     }
 
