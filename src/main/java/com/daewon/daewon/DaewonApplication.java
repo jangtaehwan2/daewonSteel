@@ -9,5 +9,4 @@ public class DaewonApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(DaewonApplication.class, args);
 	}
-
 }
