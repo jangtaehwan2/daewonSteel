@@ -51,8 +51,8 @@ public class AuthorizationManagerImpl implements AuthorizationManager {
         try {
             DecodedJWT decodedJWT = jwtVerifier.verify(token);
             String userName = decodedJWT.getClaim("userName").asString();
-            User user = userRepository.findByUserName(userName).get();
-            if(user.isAdmin() == true) {
+            boolean isAdmin = decodedJWT.getClaim("isAdmin").asBoolean();
+            if((!userName.isEmpty()) && isAdmin) {
                 return true;
             } else {
                 return false;

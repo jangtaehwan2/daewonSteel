@@ -12,7 +12,7 @@ import javax.validation.constraints.Size;
 @NoArgsConstructor
 public class UserRequestDto {
     private long id;
-    @Size(min = 1, max = 10)
+    @Size(min = 1, max = 20)
     @Pattern(regexp = "^[a-zA-Z가-힣0-9]*$")
     private String userName;
     @NotBlank

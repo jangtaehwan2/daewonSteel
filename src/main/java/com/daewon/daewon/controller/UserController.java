@@ -1,26 +1,24 @@
 package com.daewon.daewon.controller;
 
-import com.auth0.jwt.exceptions.TokenExpiredException;
 import com.daewon.daewon.domain.user.dto.*;
-import com.daewon.daewon.service.AdminPanelService;
+import com.daewon.daewon.service.UserService;
 import com.daewon.daewon.service.AuthorizationManager;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 @RequestMapping("/api")
 @RequiredArgsConstructor
 @RestController
-public class AdminPanelController {
+public class UserController {
 
-    private final AdminPanelService adminPanelService;
+    private final UserService adminPanelService;
     private final AuthorizationManager authorizationManager;
 
-    @GetMapping("/admin/user")
+    @GetMapping("/user")
     public ResponseEntity<ReadUserResponseDto> readUser(@RequestHeader(value = "Authorization")String token) {
         try {
             if (authorizationManager.isAdmin(token)) {
@@ -33,7 +31,7 @@ public class AdminPanelController {
         }
     }
 
-    @PostMapping("/admin/user")
+    @PostMapping("/user")
     public ResponseEntity<CreateUserResponseDto> createUser(@Valid @RequestBody UserRequestDto requestDto, @RequestHeader(value = "Authorization")String token) {
         try {
             if (authorizationManager.isAdmin(token)) {
@@ -46,7 +44,7 @@ public class AdminPanelController {
         }
     }
 
-    @PutMapping("/admin/user")
+    @PutMapping("/user")
     public ResponseEntity<UpdateUserResponseDto> updateUser(@RequestBody UserRequestDto requestDto, @RequestHeader(value = "Authorization")String token) {
         try {
             if (authorizationManager.isAdmin(token)) {
@@ -59,7 +57,7 @@ public class AdminPanelController {
         }
     }
 
-    @DeleteMapping("/admin/user")
+    @DeleteMapping("/user")
     public ResponseEntity<DeleteUserResponseDto> deleteUser(@RequestBody UserRequestDto requestDto, @RequestHeader(value = "Authorization")String token) {
         try {
             if (authorizationManager.isAdmin(token)) {

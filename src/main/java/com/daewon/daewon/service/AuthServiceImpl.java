@@ -26,6 +26,7 @@ public class AuthServiceImpl implements AuthService{
                 .withExpiresAt(new Date(System.currentTimeMillis() + (1000 * 60 * 60 * 24)))
                 .withIssuer(JwtConfig.issuer)
                 .withClaim("userName", user.getUserName())
+                .withClaim("isAdmin", user.isAdmin())
                 .sign(algorithm);
         return new LoginResponseDto(token);
     }
