@@ -26,7 +26,7 @@ public class SteelDataServiceImpl implements SteelDataService {
 
     @Override
     public ReadSteelDataResponseDto readSteelDataAll() {
-        List<SteelData> steelDataList = steelDataRepository.findAll();
+        List<SteelData> steelDataList = steelDataRepository.findByDeletedOrderByDateAsc(false);
         return new ReadSteelDataResponseDto(steelDataList);
     }
 
