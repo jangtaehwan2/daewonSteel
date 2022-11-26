@@ -11,9 +11,6 @@
 > * Lombok
 > * auth0:jwt
 
-DaeWonApplication 을 통하여 실행한다.  
-port : 5877  
-JWT Algorithm : HS256
 ---
 
 # API DOCUMENT
